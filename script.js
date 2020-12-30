@@ -22,16 +22,17 @@ const quotes = [
     'Breath of Flower Final Form Vermilion Eye Kanao',
     'Breath of Mist Seventh Form Obscuring Muichiro',
     'Hinokami Kagura Dragon Sun Halo Head Dance Tanjiro',
-    ''
 ];
-
+const limitedTime = 40000
 
 // store the list of words and the index of the word the player is currently typing
+let limit_timer = 0
 let best_time = 9999
 let words = [];
 let wordIndex = 0;
 // the starting time
 let startTime = Date.now();
+
 // page elements
 const quoteElement = document.getElementById('quote');
 const messageElement = document.getElementById('message');
@@ -40,6 +41,12 @@ const typedValueElement = document.getElementById('typed-value');
 
 
 document.getElementById('start').addEventListener('click', () => {
+    limit_timer = setTimeout(function () {
+        alert(`Time out 40 sec ellapsed. Your best score is ${best_time}.`);
+        quoteElement.innerText = '';
+        typedValueElement.value = '';
+
+    }, limitedTime)
     // get a quote 0 ~ quotes.length(10)
     const quoteIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[quoteIndex];
@@ -97,9 +104,11 @@ typedValueElement.addEventListener('input', (event) => {
         // end of sentence
         // Display success
         const elapsedTime = new Date().getTime() - startTime;
+        clearTimeout(limit_timer)
         if (best_time > elapsedTime / 1000) {
             best_time = elapsedTime / 1000
             const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${best_time} seconds!!`;
+
             messageElement.innerText = message;
         } else {
             const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${best_time}`;
