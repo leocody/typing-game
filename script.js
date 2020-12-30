@@ -22,16 +22,17 @@ const quotes = [
     'Breath of Flower Final Form Vermilion Eye Kanao',
     'Breath of Mist Seventh Form Obscuring Muichiro',
     'Hinokami Kagura Dragon Sun Halo Head Dance Tanjiro',
-    ''
 ];
-
+const limitedTime = 40000
 
 // store the list of words and the index of the word the player is currently typing
-let best_time = 9999
+let limitTimer = 0
+let bestTime = 9999
 let words = [];
 let wordIndex = 0;
 // the starting time
 let startTime = Date.now();
+
 // page elements
 const quoteElement = document.getElementById('quote');
 const messageElement = document.getElementById('message');
@@ -40,6 +41,12 @@ const typedValueElement = document.getElementById('typed-value');
 
 
 document.getElementById('start').addEventListener('click', () => {
+    limitTimer = setTimeout(function () {
+        alert(`Time out 40 sec ellapsed. Your best score is ${bestTime}.`);
+        quoteElement.innerText = '';
+        typedValueElement.value = '';
+
+    }, limitedTime)
     // get a quote 0 ~ quotes.length(10)
     const quoteIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[quoteIndex];
@@ -97,12 +104,14 @@ typedValueElement.addEventListener('input', (event) => {
         // end of sentence
         // Display success
         const elapsedTime = new Date().getTime() - startTime;
-        if (best_time > elapsedTime / 1000) {
-            best_time = elapsedTime / 1000
-            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${best_time} seconds!!`;
+        clearTimeout(limitTimer)
+        if (bestTime > elapsedTime / 1000) {
+            bestTime = elapsedTime / 1000
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${bestTime} seconds!!`;
+
             messageElement.innerText = message;
         } else {
-            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${best_time}`;
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${bestTime}`;
             messageElement.innerText = message;
         }
 
