@@ -1,0 +1,22 @@
+initializing 開始処理
+
+[Human Readable Language]
+1. 14個あるセンテンスの中から一つをランダムに選ぶ
+	1. Math.random で０〜１の数にする。
+	2. Quoteの長さ分倍にして1~14の数字を生成する。	
+	3. Math.floorを少数を切り捨てて整数にえる。
+	4.3で作った整数のindexのセンテンスを得る。
+2.選んだセンテンスを表示
+	1. センテンスをsplitさせる。
+	2.単語ごと別々のSpanElementを作成する。
+	3.SpanElementをjoinさせる。
+	4.3のHTMLをquote element の子要素として表示。(Inner Html)
+3.最初の単語を黄色でハイライト
+	1. QuoteElementの最初の子要素を得る。
+	2.Quoteの最初のSpanにhighlightをクラス名としてセット
+4.入力欄を空っぽにさせる
+	1.typedValueElementのValueを空っぽのStringにする。
+5.カーソルを入力欄にフォーカスを当てる
+	1.typedValueElementのfocusを呼び出す
+6.ストップウォッチで時間を測るため今の時刻を記録
+	1.現在の時刻をDateで記録
