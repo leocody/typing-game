@@ -13,7 +13,7 @@ const quotes = [
     'Do not cry. Do not despair. Now it is not the time for that. Giyuu',
     'Give it all you have got, Tanjiro! Give it all you have got! Tanjiro',
     'I can pick up a sound so gentle and kind from Tanjiro, it makes me want to cry. Zenitsu',
-    'Well, I am sorry. You have not even realized that people don not like you. Shinobu',
+    'Well, I am sorry. You have not even realized that people do not like you. Shinobu',
     'I can see that we will never be friends. Oh,what a pity.',
     'It is the wind that cuts your neck! Sanemi',
     'Breath of Water Eleventh Form Lull Giyuu',
@@ -26,8 +26,8 @@ const quotes = [
 ];
 
 
-
 // store the list of words and the index of the word the player is currently typing
+let best_time = 9999
 let words = [];
 let wordIndex = 0;
 // the starting time
@@ -97,8 +97,15 @@ typedValueElement.addEventListener('input', (event) => {
         // end of sentence
         // Display success
         const elapsedTime = new Date().getTime() - startTime;
-        const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds.`;
-        messageElement.innerText = message;
+        if (best_time > elapsedTime / 1000) {
+            best_time = elapsedTime / 1000
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${best_time} seconds!!`;
+            messageElement.innerText = message;
+        } else {
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${best_time}`;
+            messageElement.innerText = message;
+        }
+
         // word is correct but words remain
     } else if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
         // end of word
@@ -111,7 +118,10 @@ typedValueElement.addEventListener('input', (event) => {
             wordElement.className = '';
         }
         // highlight the new word
-        quoteElement.childNodes[wordIndex].className = 'highlight';
+        if (quoteElement.childNodes.length > wordIndex) {
+            quoteElement.childNodes[wordIndex].className = 'highlight';
+        }
+
         // typed  word is correct but white space is not typed
     } else if (currentWord.startsWith(typedValue)) {
         // currently correct
@@ -122,7 +132,6 @@ typedValueElement.addEventListener('input', (event) => {
         // error state
         typedValueElement.className = 'error';
         if (event.inputType !== "deleteContentBackward") {
-            console.log(event)
             errorSound.play();
         }
 
