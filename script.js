@@ -26,8 +26,8 @@ const quotes = [
 const limitedTime = 40000
 
 // store the list of words and the index of the word the player is currently typing
-let limit_timer = 0
-let best_time = 9999
+let limitTimer = 0
+let bestTime = 9999
 let words = [];
 let wordIndex = 0;
 // the starting time
@@ -41,8 +41,8 @@ const typedValueElement = document.getElementById('typed-value');
 
 
 document.getElementById('start').addEventListener('click', () => {
-    limit_timer = setTimeout(function () {
-        alert(`Time out 40 sec ellapsed. Your best score is ${best_time}.`);
+    limitTimer = setTimeout(function () {
+        alert(`Time out 40 sec ellapsed. Your best score is ${bestTime}.`);
         quoteElement.innerText = '';
         typedValueElement.value = '';
 
@@ -104,14 +104,14 @@ typedValueElement.addEventListener('input', (event) => {
         // end of sentence
         // Display success
         const elapsedTime = new Date().getTime() - startTime;
-        clearTimeout(limit_timer)
-        if (best_time > elapsedTime / 1000) {
-            best_time = elapsedTime / 1000
-            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${best_time} seconds!!`;
+        clearTimeout(limitTimer)
+        if (bestTime > elapsedTime / 1000) {
+            bestTime = elapsedTime / 1000
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds and you have your best record ${bestTime} seconds!!`;
 
             messageElement.innerText = message;
         } else {
-            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${best_time}`;
+            const message = `CONGRATULATIONS! You finished in ${elapsedTime / 1000} seconds. The best score is ${bestTime}`;
             messageElement.innerText = message;
         }
 
